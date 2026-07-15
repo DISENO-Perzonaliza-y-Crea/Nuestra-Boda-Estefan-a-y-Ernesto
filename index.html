@@ -111,34 +111,6 @@
             }
         }
 
-        /* Draggable elements in editor mode */
-        .draggable-element {
-            cursor: move;
-            user-select: none;
-            touch-action: none;
-            transition: border 0.15s, box-shadow 0.15s;
-        }
-        
-        /* Highlight components during interactive editing */
-        .editor-active .draggable-element {
-            border: 2px dashed #b4862e !important;
-            background-color: rgba(255, 255, 255, 0.9) !important;
-            padding: 10px !important;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-            border-radius: 16px;
-        }
-
-        /* Styling locked items differently in editor mode */
-        .editor-active [data-element-locked="true"] {
-            cursor: not-allowed !important;
-            border: 2px solid #b45309 !important; /* Gold/Amber Solid Border */
-            background-color: rgba(254, 243, 199, 0.8) !important;
-        }
-
-        .editor-active .coord-badge {
-            display: block !important;
-        }
-
         /* Hover effect on gallery items */
         .gallery-item {
             transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -159,12 +131,8 @@
         <source src="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/ytmp3free.cc_manuel-medrano-una-y-otra-vez-lyric-video-youtubemp3free.org.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Floating Audio & Mode controller -->
+    <!-- Floating Audio controller -->
     <div id="musicController" class="fixed bottom-6 right-6 z-50 hidden flex flex-col gap-3">
-        <!-- Coordinate editor toggle button -->
-        <button onclick="toggleEditorMode()" id="editorToggleButton" class="bg-amber-800 text-white p-3.5 rounded-full shadow-lg hover:bg-amber-900 transition-all duration-300 flex items-center justify-center w-12 h-12" title="Modo Interactivo de Coordenadas">
-            <i class="fa-solid fa-arrows-to-dot text-lg animate-pulse"></i>
-        </button>
         <!-- Audio play state controller -->
         <button onclick="toggleMusic()" class="bg-white/95 text-amber-800 p-3.5 rounded-full shadow-lg border border-amber-200/50 hover:bg-amber-50 transition-all duration-300 flex items-center justify-center w-12 h-12 gold-glow">
             <i id="musicIcon" class="fas fa-volume-mute text-lg"></i>
@@ -207,49 +175,6 @@
         </div>
     </div>
 
-    <!-- Interactive Coordinates Editor Panel -->
-    <div id="editorPanel" class="fixed top-0 left-0 right-0 bg-[#FAF6F0] border-b border-amber-200/50 shadow-md z-40 p-4 transform -translate-y-full transition-transform duration-300 max-h-[45vh] overflow-y-auto">
-        <div class="max-w-5xl mx-auto flex flex-col gap-4">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="text-center md:text-left">
-                    <h4 class="text-xs font-bold uppercase text-amber-800 tracking-wider flex items-center gap-1.5 justify-center md:justify-start">
-                        <i class="fa-solid fa-arrows-to-dot animate-ping text-[8px]"></i> Editor de Posiciones & Coordenadas en Vivo
-                    </h4>
-                    <p class="text-[10px] text-gray-500 mt-1">
-                        Arrastra los elementos libres. Los botones de Ubicación y RSVP han sido <b>bloqueados</b> en sus coordenadas finales según solicitado.
-                    </p>
-                </div>
-                <div class="flex flex-wrap gap-2 justify-center">
-                    <button onclick="addNewCustomElement()" class="px-3 py-1.5 bg-amber-700 text-white text-xs font-semibold uppercase tracking-wider rounded-md hover:bg-amber-800 transition-all flex items-center gap-1">
-                        <i class="fa-solid fa-plus"></i> Añadir Elemento
-                    </button>
-                    <button onclick="resetElementsPositions()" class="px-3 py-1.5 bg-gray-200 text-gray-700 text-xs font-semibold uppercase tracking-wider rounded-md hover:bg-gray-300 transition-all">
-                        Restablecer Todo
-                    </button>
-                    <button onclick="copyLayoutCode()" class="px-3 py-1.5 bg-amber-950 text-white text-xs font-semibold uppercase tracking-wider rounded-md hover:bg-black transition-all flex items-center gap-1">
-                        <i class="fa-solid fa-copy"></i> Copiar Coordenadas JSON
-                    </button>
-                    <button onclick="toggleEditorMode()" class="px-3 py-1.5 bg-red-800 text-white text-xs font-semibold uppercase tracking-wider rounded-md hover:bg-red-900 transition-all">
-                        Ocultar Editor
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Live coordinate feedback panel -->
-            <div class="bg-white border border-amber-200 p-3 rounded-xl shadow-inner">
-                <h5 class="text-[10px] font-bold uppercase text-amber-900 mb-1.5">Coordenadas Actuales (Porcentajes %):</h5>
-                <div id="coordinatesLiveFeed" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono text-gray-700">
-                    <!-- Dynamic live values injected here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Custom Notification Popup -->
-    <div id="customNotification" class="fixed top-6 left-1/2 transform -translate-x-1/2 bg-amber-950 text-white text-xs px-6 py-3 rounded-full shadow-2xl border border-amber-500/30 font-semibold tracking-wider uppercase z-50 transition-all duration-300 opacity-0 pointer-events-none">
-        <span id="notificationMessage">¡Mensaje guardado!</span>
-    </div>
-
     <!-- Main Wedding Content Area: Seamless Continuous Scroll Layout -->
     <main id="mainContent" class="opacity-0 transition-opacity duration-1000 pointer-events-none max-w-xl mx-auto flex flex-col items-center">
         
@@ -257,15 +182,15 @@
         <div id="continuousSlidesWrapper" class="w-full flex flex-col space-y-0 bg-transparent">
             
             <!-- Page 1: Portada Original (1.png) -->
-            <div id="page1" class="wedding-page relative w-full overflow-hidden leading-none" data-page="1">
+            <div id="page1" class="wedding-page relative w-full overflow-hidden leading-none">
                 <img src="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/1.png" alt="Portada de la Boda" class="w-full h-auto block" onerror="handleImageError(this, 1)">
             </div>
 
             <!-- Page 2: Historia / Ceremonia (2.png) con Botón de música optimizado en tamaño y altura -->
-            <div id="page2" class="wedding-page relative w-full overflow-hidden leading-none" data-page="2">
+            <div id="page2" class="wedding-page relative w-full overflow-hidden leading-none">
                 <img src="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/2.png" alt="Nuestra Historia y Ceremonia" class="w-full h-auto block" onerror="handleImageError(this, 2)">
                 
-                <!-- PLAY MUSIC ON PAGE 2 BUTTON OVERLAY (Tamaño gigante, subido un 10% en total, sin fondo) -->
+                <!-- PLAY MUSIC ON PAGE 2 BUTTON OVERLAY (Tamaño gigante, centrado al 40% vertical, sin fondo) -->
                 <div class="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
                     <button onclick="toggleMusic()" class="bg-transparent text-amber-900 hover:scale-105 active:scale-95 transition-all flex flex-col items-center gap-4 drop-shadow-[0_4px_8px_rgba(212,175,55,0.6)]">
                         <i id="page2MusicIcon" class="fas fa-play text-5xl md:text-6xl text-amber-800 animate-bounce"></i> 
@@ -275,40 +200,34 @@
             </div>
 
             <!-- Page 3: Recepción (3.png) -->
-            <div id="page3" class="wedding-page relative w-full overflow-hidden leading-none" data-page="3">
+            <div id="page3" class="wedding-page relative w-full overflow-hidden leading-none">
                 <img src="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/3.png" alt="Recepción del Evento" class="w-full h-auto block" onerror="handleImageError(this, 3)">
             </div>
 
             <!-- Page 4: Mesa de Regalos / Vestimenta (4.png) con Botón de Ubicación Fijo -->
-            <div id="page4" class="wedding-page relative w-full overflow-hidden leading-none" data-page="4">
+            <div id="page4" class="wedding-page relative w-full overflow-hidden leading-none">
                 <img src="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/4.png" alt="Mesa de Regalos y Código de Vestir" class="w-full h-auto block" onerror="handleImageError(this, 4)">
                 
-                <!-- FIXED INTERACTIVE LOCATION BUTTON (Ubicado en la Página 4) -->
-                <div id="locationButtonContainer" class="draggable-element absolute z-30 transform -translate-x-1/2 -translate-y-1/2" style="left: 30.20%; top: 46.59%;" data-element-id="locationButton" data-element-locked="true">
-                    <!-- Label with locked coordinates -->
-                    <div class="coord-badge absolute -top-6 left-1/2 transform -translate-x-1/2 bg-amber-950 text-white text-[9px] px-1.5 py-0.5 rounded shadow whitespace-nowrap pointer-events-none hidden">🔒 Fijo (X: 30.20% | Y: 46.59%)</div>
-                    
+                <!-- FIXED INTERACTIVE LOCATION BUTTON (Dorado con letras blancas - Fijo en su lugar) -->
+                <div id="locationButtonContainer" class="absolute z-30 transform -translate-x-1/2 -translate-y-1/2" style="left: 30.20%; top: 46.59%;">
                     <a href="https://maps.app.goo.gl/Uh1VeVwr1ybHjuEY9" target="_blank" 
-                       class="pulse-gold inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 text-white font-bold uppercase tracking-wider text-[11px] px-6 py-3.5 rounded-xl shadow-xl hover:scale-105 active:scale-95 transition-all">
-                        <i class="fa-solid fa-map-location-dot text-sm text-white"></i> Ver Ubicación del Evento
+                       class="pulse-gold inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 text-white font-bold uppercase tracking-wider text-[10px] px-5 py-3 rounded-xl shadow-xl hover:scale-105 active:scale-95 transition-all">
+                        <i class="fa-solid fa-map-location-dot text-xs text-white"></i> Ver Ubicación del Evento
                     </a>
                 </div>
             </div>
 
             <!-- Page 5: Hospedaje & Ubicación (5.png) -->
-            <div id="page5" class="wedding-page relative w-full overflow-hidden leading-none" data-page="5">
+            <div id="page5" class="wedding-page relative w-full overflow-hidden leading-none">
                 <img src="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/5.png" alt="Hospedaje e Ubicación" class="w-full h-auto block" onerror="handleImageError(this, 5)">
             </div>
 
             <!-- Page 6: Confirmación de Asistencia (6.png) con Cuenta Regresiva (Sin fondo, +50% grande) y RSVP -->
-            <div id="page6" class="wedding-page relative w-full overflow-hidden leading-none" data-page="6">
+            <div id="page6" class="wedding-page relative w-full overflow-hidden leading-none">
                 <img src="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/6.png" alt="Confirmación de Asistencia" class="w-full h-auto block" onerror="handleImageError(this, 6)">
                 
-                <!-- DRAGGABLE COUNTDOWN COMPONENT (Sin fondo, 50% más grande, Bloqueado) -->
-                <div id="countdownContainer" class="draggable-element absolute z-30 transform -translate-x-1/2" style="left: 52.25%; top: 62.81%; width: 90%;" data-element-id="countdown" data-element-locked="true">
-                    <!-- Label with live coordinates -->
-                    <div class="coord-badge absolute -top-6 left-1/2 transform -translate-x-1/2 bg-amber-950 text-white text-[9px] px-1.5 py-0.5 rounded shadow whitespace-nowrap pointer-events-none hidden">🔒 Fijo (X: 52.25% | Y: 62.81%)</div>
-                    
+                <!-- COUNTDOWN COMPONENT (Sin fondo, 50% más grande, Fijo en coordenadas) -->
+                <div id="countdownContainer" class="absolute z-30 transform -translate-x-1/2" style="left: 52.25%; top: 62.81%; width: 90%;">
                     <div class="bg-transparent text-center max-w-[450px] mx-auto">
                         <p class="text-[13.5px] uppercase tracking-[0.2em] text-amber-950 font-bold mb-3 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
                             <i class="fa-regular fa-clock mr-1 animate-spin text-amber-800"></i> Tiempo restante para el gran día
@@ -334,19 +253,16 @@
                     </div>
                 </div>
 
-                <!-- DRAGGABLE INTERACTIVE RSVP BUTTON (WhatsApp Link, Fijo en 54.34% / 38.31%) -->
-                <div id="rsvpButtonContainer" class="draggable-element absolute z-30 transform -translate-x-1/2 -translate-y-1/2" style="left: 54.34%; top: 38.31%;" data-element-id="rsvpButton" data-element-locked="true">
-                    <!-- Label with locked coordinates -->
-                    <div class="coord-badge absolute -top-6 left-1/2 transform -translate-x-1/2 bg-amber-950 text-white text-[9px] px-1.5 py-0.5 rounded shadow whitespace-nowrap pointer-events-none hidden">🔒 Fijo (X: 54.34% | Y: 38.31%)</div>
-                    
-                    <a href="https://w.app/suvbzi" target="_blank" 
+                <!-- INTERACTIVE RSVP BUTTON (Fijo en coordenadas exactas) -->
+                <div id="rsvpButtonContainer" class="absolute z-30 transform -translate-x-1/2 -translate-y-1/2" style="left: 54.34%; top: 38.31%;">
+                    <a href="https://wa.me/528181755201?text=¡Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Estefanía%20y%20Ernesto." target="_blank" 
                        class="pulse-ring inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-800 text-white font-bold uppercase tracking-wider text-[11px] px-6 py-3.5 rounded-xl shadow-xl hover:scale-105 active:scale-95 transition-all">
                         <i class="fa-brands fa-whatsapp text-sm text-emerald-200"></i> Confirmar Asistencia por WhatsApp
                     </a>
                 </div>
             </div>
 
-            <!-- PHOTO GALLERY SECTION (Perfectly placed between page 6 and page 8) -->
+            <!-- PHOTO GALLERY SECTION (Perfectamente posicionada entre la página 6 y la página 8) -->
             <section id="gallerySection" class="w-full bg-[#faf9f6] px-4 py-12 border-t border-b border-amber-100/40 text-center z-20 relative">
                 <div class="max-w-md mx-auto">
                     <span class="text-amber-700/80 text-2xl mb-1 block">
@@ -355,7 +271,7 @@
                     <h2 class="serif-font text-3xl text-amber-900 font-semibold mb-2">Nuestros Momentos</h2>
                     <div class="w-16 h-[1.5px] bg-amber-200 mx-auto mb-8"></div>
                     
-                    <!-- Photo Grid of 7 Real Images from WhatsApp/Github -->
+                    <!-- Grid con tus fotos reales de WhatsApp desde GitHub -->
                     <div class="grid grid-cols-2 gap-3 md:gap-4 px-1">
                         
                         <!-- Foto 1 -->
@@ -388,7 +304,7 @@
                             <img src="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/WhatsApp%20Image%202026-07-14%20at%207.48.28%20PM%20(6).jpeg" alt="Estefanía y Ernesto Moment 6" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x600/FAF6F0/c5a880?text=Foto+6'">
                         </div>
 
-                        <!-- Foto 7 (Grande/Completo Ancho para equilibrar) -->
+                        <!-- Foto 7 (Foto Horizontal Grande para balancear el diseño) -->
                         <div class="gallery-item cursor-pointer overflow-hidden rounded-2xl col-span-2 aspect-[2/1] bg-[#fcfbfa] border border-amber-100/60 shadow-sm" onclick="openLightbox(6)">
                             <img src="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/WhatsApp%20Image%202026-07-14%20at%207.48.28%20PM.jpeg" alt="Estefanía y Ernesto Moment 7" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/800x400/FAF6F0/c5a880?text=Foto+7'">
                         </div>
@@ -398,7 +314,7 @@
             </section>
 
             <!-- Page 8: Agradecimiento / Cierre (8.png) -->
-            <div id="page8" class="wedding-page relative w-full overflow-hidden leading-none" data-page="8">
+            <div id="page8" class="wedding-page relative w-full overflow-hidden leading-none">
                 <img src="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/8.png" alt="Cierre de Invitación" class="w-full h-auto block" onerror="handleImageError(this, 8)">
             </div>
 
@@ -443,103 +359,11 @@
         </div>
     </div>
 
-    <!-- Dynamic Prompt Modal to add new custom items inside interactive mode -->
-    <div id="addItemModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl w-full max-w-sm p-6 relative shadow-2xl border border-amber-100 text-left">
-            <h4 class="serif-font text-lg text-amber-800 font-bold mb-3">Agregar Elemento Personalizado</h4>
-            
-            <div class="space-y-3 mb-5">
-                <div>
-                    <label class="block text-[10px] uppercase font-bold tracking-wider text-gray-500 mb-1">Tipo de Elemento</label>
-                    <select id="newItemType" onchange="toggleItemFormFields()" class="w-full px-3 py-2 rounded-lg border border-amber-200 text-xs bg-white focus:ring-1 focus:ring-amber-500">
-                        <option value="text">Texto Corto Decorativo</option>
-                        <option value="button">Botón Web Interactivo</option>
-                        <option value="emoji">Emoji o Ícono Grande</option>
-                    </select>
-                </div>
-                <div id="fieldLabelText">
-                    <label class="block text-[10px] uppercase font-bold tracking-wider text-gray-500 mb-1">Contenido / Texto</label>
-                    <input type="text" id="newItemText" placeholder="Ej. ¡Te esperamos!" class="w-full px-3 py-2 rounded-lg border border-amber-200 text-xs">
-                </div>
-                <div id="fieldButtonLink" class="hidden">
-                    <label class="block text-[10px] uppercase font-bold tracking-wider text-gray-500 mb-1">Enlace del botón (URL)</label>
-                    <input type="url" id="newItemLink" placeholder="https://ejemplo.com" class="w-full px-3 py-2 rounded-lg border border-amber-200 text-xs">
-                </div>
-            </div>
-
-            <div class="flex gap-2 justify-end">
-                <button onclick="closeAddItemModal()" class="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-semibold uppercase tracking-wider rounded-md hover:bg-gray-200">
-                    Cancelar
-                </button>
-                <button onclick="submitNewItem()" class="px-3 py-1.5 bg-amber-700 text-white text-xs font-semibold uppercase tracking-wider rounded-md hover:bg-amber-800">
-                    Insertar
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Confirmation reset confirmation modal -->
-    <div id="resetConfirmModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl w-full max-w-sm p-6 relative shadow-2xl border border-amber-100 text-left">
-            <h4 class="serif-font text-lg text-amber-800 font-bold mb-2">¿Restablecer Posiciones?</h4>
-            <p class="text-xs text-gray-500 mb-5 leading-relaxed">
-                Esta acción volverá a colocar la cuenta regresiva en su posición por defecto. Los botones bloqueados de RSVP y ubicación no se alterarán.
-            </p>
-            <div class="flex gap-2 justify-end">
-                <button onclick="closeResetConfirmModal()" class="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-semibold uppercase tracking-wider rounded-md hover:bg-gray-200">
-                    Cancelar
-                </button>
-                <button onclick="confirmResetElements()" class="px-3 py-1.5 bg-amber-700 text-white text-xs font-semibold uppercase tracking-wider rounded-md hover:bg-amber-800">
-                    Restablecer
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Target wedding date: Agosto 21, 2026 19:00:00
         const targetWeddingDate = new Date("August 21, 2026 19:00:00").getTime();
         
         let isMusicTriggeredByScroll = false;
-        
-        // Coordinates & Drag and Drop state (persists in local storage)
-        // FORCING exact locked coordinates for rsvpButton, locationButton & countdown
-        let elementPositions = {
-            rsvpButton: { left: "54.34%", top: "38.31%", pageId: "page6" },
-            locationButton: { left: "30.20%", top: "46.59%", pageId: "page4" },
-            countdown: { left: "52.25%", top: "62.81%", pageId: "page6" }
-        };
-
-        // Load custom positions from LocalStorage if available
-        if (localStorage.getItem("wedding_invitation_coordinates")) {
-            try {
-                let saved = JSON.parse(localStorage.getItem("wedding_invitation_coordinates"));
-                
-                // Rehydrate custom added items only
-                Object.keys(saved).forEach(key => {
-                    if (key.startsWith("custom_")) {
-                        elementPositions[key] = saved[key];
-                    }
-                });
-            } catch(e) {
-                console.log("Using default placement coordinates.");
-            }
-        }
-
-        // Enforce forced locks regardless of storage
-        elementPositions.rsvpButton = { left: "54.34%", top: "38.31%", pageId: "page6" };
-        elementPositions.locationButton = { left: "30.20%", top: "46.59%", pageId: "page4" };
-        elementPositions.countdown = { left: "52.25%", top: "62.81%", pageId: "page6" };
-
-        // Simple elegant notification utility
-        function showNotification(msg) {
-            const notif = document.getElementById("customNotification");
-            document.getElementById("notificationMessage").innerText = msg;
-            notif.classList.remove("opacity-0", "pointer-events-none");
-            setTimeout(() => {
-                notif.classList.add("opacity-0", "pointer-events-none");
-            }, 3000);
-        }
 
         // --- Gold Sparkles Dust engine ---
         const canvas = document.getElementById("sparklesCanvas");
@@ -614,11 +438,8 @@
                 mainContent.classList.remove("opacity-0");
                 mainContent.style.pointerEvents = "auto";
                 
-                // Display floating music & coordinates controller panel
+                // Display floating music controller
                 musicController.classList.remove("hidden");
-
-                // Initialize element positions visually on launch
-                applySavedCoordinates();
             }, 800);
         }
 
@@ -652,7 +473,6 @@
             if (!page2) return;
 
             const rect = page2.getBoundingClientRect();
-            // Si la página 2 ya aparece en el viewport (pantalla)
             if (rect.top < window.innerHeight && rect.bottom >= 0) {
                 isMusicTriggeredByScroll = true;
                 const audio = document.getElementById("weddingMusic");
@@ -664,7 +484,7 @@
                         if (p2Icon) p2Icon.className = "fas fa-pause text-5xl md:text-6xl text-amber-600 animate-pulse";
                         if (p2Text) p2Text.innerText = "Pausar Canción";
                     }).catch(e => {
-                        console.log("Reproducción diferida a la siguiente interacción.");
+                        console.log("Reproducción diferida.");
                     });
                 }
             }
@@ -699,344 +519,6 @@
         function handleImageError(imgElement, imageIndex) {
             imgElement.onerror = null;
             imgElement.src = `https://placehold.co/600x900/FAF6F0/7c2d12?text=Tarjeta+${imageIndex}+-+Estefanía+y+Ernesto`;
-        }
-
-        // --- Interactive coordinate drag & drop logic ---
-        let isEditorActive = false;
-        let selectedDraggable = null;
-        let dragOffset = { x: 0, y: 0 };
-        let activeClickPageCoords = { x: 0, y: 0, pageId: "" };
-
-        function activateEditorOnLaunch() {
-            isEditorActive = true;
-            const editorPanel = document.getElementById("editorPanel");
-            const body = document.body;
-            
-            editorPanel.classList.remove("-translate-y-full");
-            body.classList.add("editor-active");
-            document.getElementById("editorToggleButton").classList.add("bg-red-800");
-            initDraggableListeners();
-            updateLiveCoordinatesFeed();
-        }
-
-        function toggleEditorMode() {
-            isEditorActive = !isEditorActive;
-            const editorPanel = document.getElementById("editorPanel");
-            const body = document.body;
-            
-            if (isEditorActive) {
-                editorPanel.classList.remove("-translate-y-full");
-                body.classList.add("editor-active");
-                document.getElementById("editorToggleButton").classList.add("bg-red-800");
-                initDraggableListeners();
-                updateLiveCoordinatesFeed();
-            } else {
-                editorPanel.classList.add("-translate-y-full");
-                body.classList.remove("editor-active");
-                document.getElementById("editorToggleButton").classList.remove("bg-red-800");
-                destroyDraggableListeners();
-            }
-        }
-
-        // Visual position coordinates renderer
-        function applySavedCoordinates() {
-            Object.keys(elementPositions).forEach(id => {
-                let element = document.querySelector(`[data-element-id="${id}"]`);
-                if (element) {
-                    const targetPageId = elementPositions[id].pageId;
-                    const correctParent = document.getElementById(targetPageId);
-                    if (correctParent && element.parentNode !== correctParent) {
-                        correctParent.appendChild(element);
-                    }
-                    
-                    element.style.left = elementPositions[id].left;
-                    element.style.top = elementPositions[id].top;
-                    
-                    // Update the dynamic text badge
-                    const badge = element.querySelector(".coord-badge");
-                    if (badge) {
-                        if (element.getAttribute("data-element-locked") === "true") {
-                            badge.innerHTML = `🔒 Fijo (X: ${elementPositions[id].left} | Y: ${elementPositions[id].top})`;
-                        } else {
-                            badge.innerText = `X: ${elementPositions[id].left} | Y: ${elementPositions[id].top}`;
-                        }
-                    }
-                } else {
-                    // Recreate custom elements
-                    if (id.startsWith("custom_")) {
-                        recreateCustomElement(id, elementPositions[id]);
-                    }
-                }
-            });
-            updateLiveCoordinatesFeed();
-        }
-
-        // Drag handlers
-        function initDraggableListeners() {
-            const draggables = document.querySelectorAll(".draggable-element");
-            draggables.forEach(elem => {
-                elem.addEventListener("mousedown", dragStart);
-                elem.addEventListener("touchstart", dragStart, { passive: false });
-            });
-
-            const pages = document.querySelectorAll(".wedding-page");
-            pages.forEach(page => {
-                page.addEventListener("click", handlePageClickForAddition);
-            });
-        }
-
-        function destroyDraggableListeners() {
-            const draggables = document.querySelectorAll(".draggable-element");
-            draggables.forEach(elem => {
-                elem.removeEventListener("mousedown", dragStart);
-                elem.removeEventListener("touchstart", dragStart);
-            });
-
-            const pages = document.querySelectorAll(".wedding-page");
-            pages.forEach(page => {
-                page.removeEventListener("click", handlePageClickForAddition);
-            });
-        }
-
-        function dragStart(e) {
-            if (!isEditorActive) return;
-
-            const isLocked = e.currentTarget.getAttribute("data-element-locked") === "true";
-            if (isLocked) {
-                showNotification("Este botón está fijado y bloqueado en su diseño original.");
-                return;
-            }
-
-            selectedDraggable = e.currentTarget;
-            
-            const clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
-            const clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
-            
-            const rect = selectedDraggable.getBoundingClientRect();
-            dragOffset.x = clientX - (rect.left + rect.width / 2);
-            dragOffset.y = clientY - (rect.top + rect.height / 2);
-            
-            window.addEventListener("mousemove", dragMove);
-            window.addEventListener("touchmove", dragMove, { passive: false });
-            window.addEventListener("mouseup", dragEnd);
-            window.addEventListener("touchend", dragEnd);
-            
-            e.preventDefault();
-        }
-
-        function dragMove(e) {
-            if (!selectedDraggable) return;
-            
-            const clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
-            const clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
-            
-            const pageParent = selectedDraggable.closest(".wedding-page");
-            const parentRect = pageParent.getBoundingClientRect();
-            
-            let posX = clientX - parentRect.left - dragOffset.x;
-            let posY = clientY - parentRect.top - dragOffset.y;
-            
-            posX = Math.max(0, Math.min(posX, parentRect.width));
-            posY = Math.max(0, Math.min(posY, parentRect.height));
-            
-            const percentX = ((posX / parentRect.width) * 100).toFixed(2) + "%";
-            const percentY = ((posY / parentRect.height) * 100).toFixed(2) + "%";
-            
-            selectedDraggable.style.left = percentX;
-            selectedDraggable.style.top = percentY;
-
-            const badge = selectedDraggable.querySelector(".coord-badge");
-            if (badge) {
-                badge.innerText = `X: ${percentX} | Y: ${percentY}`;
-            }
-
-            const elemId = selectedDraggable.getAttribute("data-element-id");
-            if (elemId) {
-                elementPositions[elemId] = { 
-                    left: percentX, 
-                    top: percentY,
-                    type: elementPositions[elemId]?.type,
-                    text: elementPositions[elemId]?.text,
-                    link: elementPositions[elemId]?.link,
-                    pageId: pageParent.id
-                };
-            }
-            
-            updateLiveCoordinatesFeed();
-            if (e.cancelable) e.preventDefault();
-        }
-
-        function dragEnd() {
-            selectedDraggable = null;
-            window.removeEventListener("mousemove", dragMove);
-            window.removeEventListener("touchmove", dragMove);
-            
-            localStorage.setItem("wedding_invitation_coordinates", JSON.stringify(elementPositions));
-        }
-
-        function updateLiveCoordinatesFeed() {
-            const feedContainer = document.getElementById("coordinatesLiveFeed");
-            if (!feedContainer) return;
-
-            let html = "";
-            Object.keys(elementPositions).forEach(id => {
-                let label = "";
-                let isLocked = id === "locationButton" || id === "rsvpButton" || id === "countdown";
-
-                if (id === "locationButton") label = "🔒 Botón Ubicación (Fijo Pág 4)";
-                else if (id === "rsvpButton") label = "🔒 Botón RSVP (Fijo Pág 6)";
-                else if (id === "countdown") label = "🔒 Cuenta Regresiva (Fijo Pág 6)";
-                else label = `✨ Custom (${id.substring(7, 12)})`;
-
-                html += `
-                    <div class="p-2 ${isLocked ? 'bg-amber-100/75 border-amber-300' : 'bg-amber-50 border-amber-200'} rounded border flex flex-col justify-between">
-                        <span class="font-bold text-amber-950">${label}</span>
-                        <div class="flex justify-between mt-1 text-[11px] text-gray-600">
-                            <span>Izquierda (X): <b class="text-amber-800">${elementPositions[id].left}</b></span>
-                            <span>Arriba (Y): <b class="text-amber-800">${elementPositions[id].top}</b></span>
-                        </div>
-                    </div>
-                `;
-            });
-            feedContainer.innerHTML = html;
-        }
-
-        function handlePageClickForAddition(e) {
-            if (e.target !== e.currentTarget && !e.target.classList.contains("wedding-page") && e.target.tagName !== "IMG") return;
-            
-            const rect = e.currentTarget.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const clickY = e.clientY - rect.top;
-            
-            activeClickPageCoords.x = ((clickX / rect.width) * 100).toFixed(2);
-            activeClickPageCoords.y = ((clickY / rect.height) * 100).toFixed(2);
-            activeClickPageCoords.pageId = e.currentTarget.id;
-            
-            document.getElementById("newItemText").value = "";
-            document.getElementById("newItemLink").value = "";
-            document.getElementById("addItemModal").classList.remove("hidden");
-        }
-
-        function closeAddItemModal() {
-            document.getElementById("addItemModal").classList.add("hidden");
-        }
-
-        function toggleItemFormFields() {
-            const type = document.getElementById("newItemType").value;
-            const linkField = document.getElementById("fieldButtonLink");
-            
-            if (type === "button") {
-                linkField.classList.remove("hidden");
-            } else {
-                linkField.classList.add("hidden");
-            }
-        }
-
-        function submitNewItem() {
-            const type = document.getElementById("newItemType").value;
-            const text = document.getElementById("newItemText").value || "Nuevo Texto";
-            const link = document.getElementById("newItemLink").value || "#";
-            const pageId = activeClickPageCoords.pageId;
-            
-            const elementId = "custom_" + Date.now();
-            
-            const dataObj = {
-                left: activeClickPageCoords.x + "%",
-                top: activeClickPageCoords.y + "%",
-                type: type,
-                text: text,
-                link: link,
-                pageId: pageId
-            };
-
-            recreateCustomElement(elementId, dataObj);
-            
-            elementPositions[elementId] = dataObj;
-            localStorage.setItem("wedding_invitation_coordinates", JSON.stringify(elementPositions));
-            
-            closeAddItemModal();
-            updateLiveCoordinatesFeed();
-            
-            if (isEditorActive) {
-                initDraggableListeners();
-            }
-        }
-
-        function recreateCustomElement(id, data) {
-            const parentPage = document.getElementById(data.pageId || "page1");
-            if (!parentPage) return;
-
-            const wrapper = document.createElement("div");
-            wrapper.className = "draggable-element absolute z-30 transform -translate-x-1/2 -translate-y-1/2";
-            wrapper.style.left = data.left;
-            wrapper.style.top = data.top;
-            wrapper.setAttribute("data-element-id", id);
-
-            const badge = document.createElement("div");
-            badge.className = "coord-badge absolute -top-6 left-1/2 transform -translate-x-1/2 bg-amber-950 text-white text-[9px] px-1.5 py-0.5 rounded shadow whitespace-nowrap pointer-events-none hidden";
-            badge.innerText = `X: ${data.left} | Y: ${data.top}`;
-            wrapper.appendChild(badge);
-
-            const contentDiv = document.createElement("div");
-            if (data.type === "button") {
-                contentDiv.innerHTML = `
-                    <a href="${data.link}" target="_blank" class="inline-flex items-center gap-1.5 bg-amber-800 text-white font-semibold uppercase text-[10px] px-4 py-2.5 rounded-lg shadow-md">
-                        ${data.text}
-                    </a>
-                `;
-            } else if (data.type === "emoji") {
-                contentDiv.innerHTML = `<span class="text-3xl filter drop-shadow-md select-none">${data.text}</span>`;
-            } else {
-                contentDiv.innerHTML = `<p class="serif-font text-sm font-bold text-amber-900 bg-white/80 px-2 py-1 rounded shadow-sm border border-amber-200">${data.text}</p>`;
-            }
-            wrapper.appendChild(contentDiv);
-            parentPage.appendChild(wrapper);
-        }
-
-        function resetElementsPositions() {
-            document.getElementById("resetConfirmModal").classList.remove("hidden");
-        }
-
-        function closeResetConfirmModal() {
-            document.getElementById("resetConfirmModal").classList.add("hidden");
-        }
-
-        function confirmResetElements() {
-            localStorage.removeItem("wedding_invitation_coordinates");
-            
-            Object.keys(elementPositions).forEach(key => {
-                if (key.startsWith("custom_")) {
-                    const customEl = document.querySelector(`[data-element-id="${key}"]`);
-                    if (customEl) customEl.remove();
-                }
-            });
-
-            elementPositions = {
-                rsvpButton: { left: "54.34%", top: "38.31%", pageId: "page6" },
-                locationButton: { left: "30.20%", top: "46.59%", pageId: "page4" },
-                countdown: { left: "50.00%", top: "15.00%", pageId: "page6" }
-            };
-
-            applySavedCoordinates();
-            closeResetConfirmModal();
-            showNotification("Coordenadas de cuenta regresiva restablecidas.");
-        }
-
-        function copyLayoutCode() {
-            const dataString = JSON.stringify(elementPositions, null, 4);
-            const tempTextArea = document.createElement("textarea");
-            tempTextArea.value = dataString;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            
-            try {
-                document.execCommand('copy');
-                showNotification("¡Código JSON copiado al portapapeles!");
-            } catch (err) {
-                showNotification("Error al copiar automáticamente. Revisa consola.");
-                console.log("Coordenadas Personalizadas:", dataString);
-            }
-            document.body.removeChild(tempTextArea);
         }
 
         // --- Lightbox Gallery Code & Actions ---
