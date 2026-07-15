@@ -5,19 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestra Boda - Estefanía & Ernesto</title>
     
-    <!-- Open Graph (WhatsApp, Facebook & Social Media Sharing Preview) -->
+    <!-- Open Graph (WhatsApp, Facebook, Messenger & Social Media Sharing Preview) -->
     <meta property="og:title" content="Nuestra Boda - Estefanía & Ernesto">
     <meta property="og:description" content="Estás cordialmente invitado a celebrar con nosotros. Conoce todos los detalles aquí.">
+    <meta property="og:url" content="https://diseno-perzonaliza-y-crea.github.io/Nuestra-Boda-Estefan-a-y-Ernesto/">
     <meta property="og:image" content="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/portada%20Boda.png">
+    <meta property="og:image:secure_url" content="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/portada%20Boda.png">
     <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
+
+    <!-- Twitter Card (Backup for Discord, Messenger & Telegram) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nuestra Boda - Estefanía & Ernesto">
+    <meta name="twitter:description" content="Estás cordialmente invitado a celebrar con nosotros. Conoce todos los detalles aquí.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/Nuestra-Boda-Estefan-a-y-Ernesto/main/portada%20Boda.png">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,300;0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,300;0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght=200;300;400;500;600&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -197,7 +207,7 @@
         </div>
     </div>
 
-    <!-- Interactive Coordinates Editor Panel (Active on launch by default) -->
+    <!-- Interactive Coordinates Editor Panel -->
     <div id="editorPanel" class="fixed top-0 left-0 right-0 bg-[#FAF6F0] border-b border-amber-200/50 shadow-md z-40 p-4 transform -translate-y-full transition-transform duration-300 max-h-[45vh] overflow-y-auto">
         <div class="max-w-5xl mx-auto flex flex-col gap-4">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -235,7 +245,7 @@
         </div>
     </div>
 
-    <!-- Custom Notification Popup (Replaces default system alerts/confirms) -->
+    <!-- Custom Notification Popup -->
     <div id="customNotification" class="fixed top-6 left-1/2 transform -translate-x-1/2 bg-amber-950 text-white text-xs px-6 py-3 rounded-full shadow-2xl border border-amber-500/30 font-semibold tracking-wider uppercase z-50 transition-all duration-300 opacity-0 pointer-events-none">
         <span id="notificationMessage">¡Mensaje guardado!</span>
     </div>
@@ -609,9 +619,6 @@
 
                 // Initialize element positions visually on launch
                 applySavedCoordinates();
-
-                // EL MODO EDITOR DE COORDENADAS AHORA INICIA DESACTIVADO POR DEFECTO
-                // (Para editar, haz clic en el botón de la esquina inferior derecha)
             }, 800);
         }
 
@@ -694,7 +701,6 @@
             imgElement.src = `https://placehold.co/600x900/FAF6F0/7c2d12?text=Tarjeta+${imageIndex}+-+Estefanía+y+Ernesto`;
         }
 
-        // --- STREAMING_CHUNK: Programming live coord dashboard, locked controls, and drag logic ---
         // --- Interactive coordinate drag & drop logic ---
         let isEditorActive = false;
         let selectedDraggable = null;
@@ -797,7 +803,6 @@
 
             const isLocked = e.currentTarget.getAttribute("data-element-locked") === "true";
             if (isLocked) {
-                // Do not drag locked elements!
                 showNotification("Este botón está fijado y bloqueado en su diseño original.");
                 return;
             }
@@ -831,7 +836,6 @@
             let posX = clientX - parentRect.left - dragOffset.x;
             let posY = clientY - parentRect.top - dragOffset.y;
             
-            // Constrain within boundaries
             posX = Math.max(0, Math.min(posX, parentRect.width));
             posY = Math.max(0, Math.min(posY, parentRect.height));
             
@@ -841,13 +845,11 @@
             selectedDraggable.style.left = percentX;
             selectedDraggable.style.top = percentY;
 
-            // Update the badge in real-time
             const badge = selectedDraggable.querySelector(".coord-badge");
             if (badge) {
                 badge.innerText = `X: ${percentX} | Y: ${percentY}`;
             }
 
-            // Update state model
             const elemId = selectedDraggable.getAttribute("data-element-id");
             if (elemId) {
                 elementPositions[elemId] = { 
@@ -869,11 +871,9 @@
             window.removeEventListener("mousemove", dragMove);
             window.removeEventListener("touchmove", dragMove);
             
-            // Commit to local storage
             localStorage.setItem("wedding_invitation_coordinates", JSON.stringify(elementPositions));
         }
 
-        // Real-time Coordinate Renderer on the dashboard
         function updateLiveCoordinatesFeed() {
             const feedContainer = document.getElementById("coordinatesLiveFeed");
             if (!feedContainer) return;
@@ -932,7 +932,6 @@
             }
         }
 
-        // Insert new element
         function submitNewItem() {
             const type = document.getElementById("newItemType").value;
             const text = document.getElementById("newItemText").value || "Nuevo Texto";
@@ -973,7 +972,6 @@
             wrapper.style.top = data.top;
             wrapper.setAttribute("data-element-id", id);
 
-            // Add coordinate badge
             const badge = document.createElement("div");
             badge.className = "coord-badge absolute -top-6 left-1/2 transform -translate-x-1/2 bg-amber-950 text-white text-[9px] px-1.5 py-0.5 rounded shadow whitespace-nowrap pointer-events-none hidden";
             badge.innerText = `X: ${data.left} | Y: ${data.top}`;
@@ -995,7 +993,6 @@
             parentPage.appendChild(wrapper);
         }
 
-        // Beautiful non-blocking modals replacing prompt alert & confirm
         function resetElementsPositions() {
             document.getElementById("resetConfirmModal").classList.remove("hidden");
         }
@@ -1007,7 +1004,6 @@
         function confirmResetElements() {
             localStorage.removeItem("wedding_invitation_coordinates");
             
-            // Remove custom added items
             Object.keys(elementPositions).forEach(key => {
                 if (key.startsWith("custom_")) {
                     const customEl = document.querySelector(`[data-element-id="${key}"]`);
@@ -1043,7 +1039,6 @@
             document.body.removeChild(tempTextArea);
         }
 
-        // --- STREAMING_CHUNK: Setting up photogallery lightboxes and navigation ---
         // --- Lightbox Gallery Code & Actions ---
         let currentLightboxIndex = 0;
         let galleryImages = [];
@@ -1102,7 +1097,6 @@
             updateLightboxContent();
         }
 
-        // Touch Swipe gestures for Photo Lightbox (Mobile optimized)
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -1119,10 +1113,8 @@
         function handleLightboxSwipeGesture() {
             const swipeThreshold = 50;
             if (touchStartX - touchEndX > swipeThreshold) {
-                // Swiped Left -> Next Photo
                 nextLightboxPhoto();
             } else if (touchEndX - touchStartX > swipeThreshold) {
-                // Swiped Right -> Previous Photo
                 prevLightboxPhoto();
             }
         }
